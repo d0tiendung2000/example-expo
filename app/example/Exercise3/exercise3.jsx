@@ -15,7 +15,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import Feather from "@expo/vector-icons/Feather";
 
-export default function Lab2() {
+export default function Exercise3() {
   const navigation = useNavigation();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
@@ -28,7 +28,7 @@ export default function Lab2() {
     navigation.setOptions({
       headerShown: true,
       headerTransparent: true,
-      headerTitle: "Lab 2",
+      headerTitle: "Exercise3",
     });
   }, []);
 
@@ -50,14 +50,7 @@ export default function Lab2() {
   };
 
   return (
-    <View
-      style={{
-        padding: 20,
-        paddingTop: 75,
-        backgroundColor: Colors.WHITE,
-        height: "100%",
-      }}
-    >
+    <View style={styles.container}>
       <View>
         <LottieView
           source={require("../../../assets/json/fire-base.json")}
@@ -70,31 +63,11 @@ export default function Lab2() {
           }}
         />
       </View>
-      <Text
-        style={{
-          fontSize: 30,
-          fontFamily: "outfit-bold",
-          textAlign: "center",
-          color: Colors.PRIMARY,
-          marginTop: 20,
-        }}
-      >
-        Welcome Back!
-      </Text>
+      <Text style={styles.text}>Welcome Back!</Text>
 
       {/*Nhap Email*/}
 
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          paddingHorizontal: 15,
-          borderWidth: 2,
-          borderRadius: 15,
-          borderColor: Colors.GRAY,
-          marginTop: 20,
-        }}
-      >
+      <View style={styles.input}>
         <MaterialIcons
           name="email"
           size={24}
@@ -107,41 +80,14 @@ export default function Lab2() {
             setEmail(text);
             if (text.trim() !== "") setEmailError("");
           }}
-          style={{
-            flex: 1,
-            paddingVertical: 12,
-            fontFamily: "outfit-regular",
-          }}
+          style={styles.textInput}
           placeholder="Enter Email"
         />
       </View>
-      {emailError !== "" && (
-        <Text
-          style={{
-            color: Colors.GRAY,
-            fontSize: 14,
-            fontFamily: "outfit-bold",
-            marginTop: 5,
-            marginLeft: 10,
-          }}
-        >
-          {emailError}
-        </Text>
-      )}
+      {emailError !== "" && <Text style={styles.textError}>{emailError}</Text>}
 
       {/* Nhập Password */}
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          paddingHorizontal: 15,
-          borderWidth: 2,
-          borderRadius: 15,
-          borderColor: Colors.GRAY,
-          marginTop: 20,
-          position: "relative",
-        }}
-      >
+      <View style={styles.input}>
         <FontAwesome6
           name="key"
           size={24}
@@ -155,12 +101,9 @@ export default function Lab2() {
             if (text.trim() !== "") setPasswordError("");
           }}
           secureTextEntry={!showPassword}
-          style={{
-            flex: 1,
-            paddingVertical: 12,
-            fontFamily: "outfit-regular",
-            paddingRight: 35, // chừa chỗ cho con mắt
-          }}
+          style={
+            [styles.textInput, { paddingRight: 35 }] // chừa chỗ cho con mắt
+          }
           placeholder="Enter Password"
         />
         <TouchableOpacity
@@ -178,82 +121,83 @@ export default function Lab2() {
         </TouchableOpacity>
       </View>
       {passwordError !== "" && (
-        <Text
-          style={{
-            color: Colors.GRAY,
-            fontSize: 14,
-            fontFamily: "outfit-bold",
-            marginTop: 5,
-            marginLeft: 10,
-          }}
-        >
-          {passwordError}
-        </Text>
+        <Text style={styles.textError}>{passwordError}</Text>
       )}
 
       {/*Button Login*/}
       <TouchableOpacity
         onPress={OnClickLogin}
-        style={{
-          marginTop: 20,
-          padding: 15,
-          borderRadius: 15,
-          backgroundColor: Colors.PRIMARY,
-          alignItems: "center",
-        }}
+        style={[
+          styles.button,
+          { backgroundColor: Colors.PRIMARY, marginTop: 20 },
+        ]}
       >
-        <Text
-          style={{
-            fontFamily: "outfit-medium",
-            fontSize: 20,
-            color: Colors.WHITE,
-          }}
-        >
-          Login
-        </Text>
+        <Text style={[styles.buttonText, { color: Colors.WHITE }]}>Login</Text>
       </TouchableOpacity>
 
       {/*Button Create Account*/}
       <TouchableOpacity
-        onPress={() => router.push("example/Exercise2/create-account")}
-        style={{
-          padding: 15,
-          borderRadius: 15,
-          backgroundColor: Colors.WHITE,
-          alignItems: "center",
-        }}
+        onPress={() => router.push("example/Exercise3/create-account")}
+        style={styles.button}
       >
-        <Text
-          style={{
-            fontFamily: "outfit-medium",
-            fontSize: 20,
-            color: Colors.PRIMARY,
-          }}
-        >
-          Create a new account
-        </Text>
+        <Text style={styles.buttonText}>Create a new account</Text>
       </TouchableOpacity>
 
       {/*Button Forgot Password*/}
       <TouchableOpacity
-        onPress={() => router.push("example/Exercise2/forgot-password")}
-        style={{
-          padding: 15,
-          borderRadius: 15,
-          backgroundColor: Colors.WHITE,
-          alignItems: "center",
-        }}
+        onPress={() => router.push("example/Exercise3/forgot-password")}
+        style={styles.button}
       >
-        <Text
-          style={{
-            fontFamily: "outfit-medium",
-            fontSize: 20,
-            color: Colors.PRIMARY,
-          }}
-        >
-          Forgot Password
-        </Text>
+        <Text style={styles.buttonText}>Forgot Password</Text>
       </TouchableOpacity>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+    paddingTop: 75,
+    backgroundColor: Colors.WHITE,
+    height: "100%",
+  },
+  button: {
+    padding: 15,
+    borderRadius: 15,
+    backgroundColor: Colors.WHITE,
+    alignItems: "center",
+  },
+  buttonText: {
+    fontFamily: "outfit-medium",
+    fontSize: 20,
+    color: Colors.PRIMARY,
+  },
+  text: {
+    fontSize: 30,
+    fontFamily: "outfit-bold",
+    textAlign: "center",
+    color: Colors.PRIMARY,
+    marginTop: 20,
+  },
+  input: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 15,
+    borderWidth: 2,
+    borderRadius: 15,
+    borderColor: Colors.GRAY,
+    marginTop: 20,
+  },
+  textInput: {
+    flex: 1,
+    paddingVertical: 12,
+    fontFamily: "outfit-bold",
+  },
+  textError: {
+    color: Colors.GRAY,
+    fontSize: 14,
+    fontFamily: "outfit-bold",
+    marginTop: 5,
+    marginLeft: 10,
+  },
+});

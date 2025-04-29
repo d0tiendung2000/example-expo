@@ -1,10 +1,10 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-export default function Lab3() {
+export default function Exercise5() {
   return (
     <View>
-      <Text>Lab3</Text>
+      <Text>Lab4</Text>
     </View>
   );
 }

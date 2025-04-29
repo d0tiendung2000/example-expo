@@ -1,4 +1,10 @@
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  StyleSheet,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation, useRouter } from "expo-router";
 import { Colors } from "../../../constants/Colors";
@@ -20,69 +26,27 @@ export default function CreateAccount() {
     });
   }, []);
   return (
-    <View
-      style={{
-        padding: 20,
-        paddingTop: 40,
-        backgroundColor: Colors.WHITE,
-        height: "100%",
-      }}
-    >
+    <View style={styles.container}>
       <TouchableOpacity onPress={() => router.back()}>
         <Ionicons name="caret-back" size={24} color="black" />
       </TouchableOpacity>
-      <Text
-        style={{
-          fontSize: 30,
-          fontFamily: "outfit-bold",
-          textAlign: "center",
-          color: Colors.PRIMARY,
-          marginTop: 100,
-        }}
-      >
+      <Text style={[styles.text, { marginTop: 70 }]}>
         Create a new account!
       </Text>
 
       {/*Nhap Email */}
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          paddingHorizontal: 15,
-          borderWidth: 2,
-          borderRadius: 15,
-          borderColor: Colors.GRAY,
-          marginTop: 20,
-        }}
-      >
+      <View style={styles.input}>
         <MaterialIcons
           name="email"
           size={24}
           color="black"
           style={{ marginRight: 10 }}
         />
-        <TextInput
-          style={{
-            flex: 1,
-            paddingVertical: 12,
-            fontFamily: "outfit-regular",
-          }}
-          placeholder="Enter Email"
-        />
+        <TextInput style={styles.textInput} placeholder="Enter Email" />
       </View>
 
       {/*Nhap Password */}
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          paddingHorizontal: 15,
-          borderWidth: 2,
-          borderRadius: 15,
-          borderColor: Colors.GRAY,
-          marginTop: 20,
-        }}
-      >
+      <View style={styles.input}>
         <FontAwesome6
           name="key"
           size={24}
@@ -91,12 +55,7 @@ export default function CreateAccount() {
         />
         <TextInput
           secureTextEntry={!showPassword}
-          style={{
-            flex: 1,
-            paddingVertical: 12,
-            fontFamily: "outfit-regular",
-            paddingRight: 35,
-          }}
+          style={styles.textInput}
           placeholder="Enter Password"
         />
 
@@ -116,17 +75,7 @@ export default function CreateAccount() {
       </View>
 
       {/*Nhap Confirm Password */}
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          paddingHorizontal: 15,
-          borderWidth: 2,
-          borderRadius: 15,
-          borderColor: Colors.GRAY,
-          marginTop: 20,
-        }}
-      >
+      <View style={styles.input}>
         <FontAwesome6
           name="key"
           size={24}
@@ -135,11 +84,7 @@ export default function CreateAccount() {
         />
         <TextInput
           secureTextEntry={!showPassword}
-          style={{
-            flex: 1,
-            paddingVertical: 12,
-            fontFamily: "outfit-regular",
-          }}
+          style={styles.textInput}
           placeholder="Enter Confirm Password"
         />
 
@@ -160,24 +105,62 @@ export default function CreateAccount() {
 
       {/*Button SignUp*/}
       <TouchableOpacity
-        style={{
-          marginTop: 20,
-          padding: 15,
-          borderRadius: 15,
-          backgroundColor: Colors.PRIMARY,
-          alignItems: "center",
-        }}
+        style={[
+          styles.button,
+          { backgroundColor: Colors.PRIMARY, marginTop: 20 },
+        ]}
       >
-        <Text
-          style={{
-            fontFamily: "outfit-medium",
-            fontSize: 20,
-            color: Colors.WHITE,
-          }}
-        >
+        <Text style={[styles.buttonText, { color: Colors.WHITE }]}>
           Sign Up
         </Text>
       </TouchableOpacity>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+    backgroundColor: Colors.WHITE,
+    height: "100%",
+  },
+  button: {
+    padding: 15,
+    borderRadius: 15,
+    backgroundColor: Colors.WHITE,
+    alignItems: "center",
+  },
+  buttonText: {
+    fontFamily: "outfit-medium",
+    fontSize: 20,
+    color: Colors.PRIMARY,
+  },
+  text: {
+    fontSize: 30,
+    fontFamily: "outfit-bold",
+    textAlign: "center",
+    color: Colors.PRIMARY,
+    marginTop: 20,
+  },
+  input: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 15,
+    borderWidth: 2,
+    borderRadius: 15,
+    borderColor: Colors.GRAY,
+    marginTop: 20,
+  },
+  textInput: {
+    flex: 1,
+    paddingVertical: 12,
+    fontFamily: "outfit-bold",
+  },
+  textError: {
+    color: Colors.GRAY,
+    fontSize: 14,
+    fontFamily: "outfit-bold",
+    marginTop: 5,
+    marginLeft: 10,
+  },
+});
