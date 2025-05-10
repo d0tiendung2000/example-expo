@@ -14,12 +14,16 @@ import LottieView from "lottie-react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import Feather from "@expo/vector-icons/Feather";
+import { auth } from "../../../configs/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function Exercise3() {
   const navigation = useNavigation();
   const router = useRouter();
+
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
+  const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -47,6 +51,22 @@ export default function Exercise3() {
       setPasswordError("Please enter Password");
       valid = false;
     }
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        router.replace("/example/Exercise5/todo/todo_list");
+        console.log(user);
+      })
+
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage, errorCode);
+        if (errorCode == "auth/invalid-credential") {
+          ToastAndroid.show("Invalid Email or Password", ToastAndroid.LONG);
+        }
+      });
   };
 
   return (

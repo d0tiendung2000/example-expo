@@ -10,12 +10,6 @@ export default function SelectExample() {
       <Text style={styles.text}>Đỗ Tiến Dũng </Text>
       <Text style={styles.text}>2124802010660</Text>
 
-      <View style={{ marginTop: 40 }}>
-        <Text style={[styles.text, { fontSize: 16 }]}>
-          Login, CreateNewAccout, ResetPassword
-        </Text>
-      </View>
-
       <TouchableOpacity
         onPress={() => router.push("example/Exercise3/exercise3")}
         style={styles.button}
@@ -31,7 +25,7 @@ export default function SelectExample() {
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => router.push("example/Exercise5/exercise5")}
+        onPress={() => router.push("example/Exercise5")}
         style={styles.button}
       >
         <Text style={styles.buttonText}>Exercise 5</Text>

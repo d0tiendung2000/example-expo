@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   TextInput,
   StyleSheet,
+  ToastAndroid,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation, useRouter } from "expo-router";
@@ -12,11 +13,17 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import Feather from "@expo/vector-icons/Feather";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { auth } from "../../../configs/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function CreateAccount() {
   const navigation = useNavigation();
-  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     navigation.setOptions({
@@ -25,6 +32,27 @@ export default function CreateAccount() {
       headerTitle: "",
     });
   }, []);
+
+  const OnCreateAccount = () => {
+    if (!fullName && !email && !password) {
+      ToastAndroid.show("Please enter all fields", ToastAndroid.BOTTOM);
+      return;
+    }
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+        router.replace("/example/Exercise5/todo/todo_list");
+      })
+
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => router.back()}>
@@ -34,6 +62,21 @@ export default function CreateAccount() {
         Create a new account!
       </Text>
 
+      {/*Nhap FullName */}
+      <View style={styles.input}>
+        <MaterialIcons
+          name="person"
+          size={24}
+          color="black"
+          style={{ marginRight: 10 }}
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder="FullName"
+          onChangeText={(value) => setFullName(value)}
+        />
+      </View>
+
       {/*Nhap Email */}
       <View style={styles.input}>
         <MaterialIcons
@@ -42,7 +85,11 @@ export default function CreateAccount() {
           color="black"
           style={{ marginRight: 10 }}
         />
-        <TextInput style={styles.textInput} placeholder="Enter Email" />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Enter Email"
+          onChangeText={(value) => setEmail(value)}
+        />
       </View>
 
       {/*Nhap Password */}
@@ -57,6 +104,7 @@ export default function CreateAccount() {
           secureTextEntry={!showPassword}
           style={styles.textInput}
           placeholder="Enter Password"
+          onChangeText={(value) => setPassword(value)}
         />
 
         <TouchableOpacity
@@ -74,7 +122,7 @@ export default function CreateAccount() {
         </TouchableOpacity>
       </View>
 
-      {/*Nhap Confirm Password */}
+      {/* Nhap Confirm Password
       <View style={styles.input}>
         <FontAwesome6
           name="key"
@@ -101,10 +149,11 @@ export default function CreateAccount() {
             color="gray"
           />
         </TouchableOpacity>
-      </View>
+      </View> */}
 
       {/*Button SignUp*/}
       <TouchableOpacity
+        onPress={OnCreateAccount}
         style={[
           styles.button,
           { backgroundColor: Colors.PRIMARY, marginTop: 20 },
